@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,15 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-try:
-    SECRET_KEY = os.environ["SECRET_KEY"]
-except KeyError as e:
-    raise RuntimeError("Could not find a SECRET_KEY in environment") from e
+SECRET_KEY = env('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.30.121', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['hr.tcla.ru', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -79,11 +81,11 @@ WSGI_APPLICATION = 'profotbor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'profotbor_db',
-        'USER': 'profotbor',
-        'PASSWORD': 'Z78951230z+',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
     }
 }
 
