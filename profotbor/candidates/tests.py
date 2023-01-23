@@ -1,0 +1,6 @@
+from imapclient import imap_utf7
+decoded = imap_utf7.decode(b'&BBoEPgQ9BEIEQAQ+BDsETA- &BD0ENQREBEIENQQ,BEAEPgQ0BEMEOgRCBD4EMg-/&BC0EOwQ1BDoEQgRABD4EPQQ9BEsENQ- &BD8EOwQ+BDwEMQRL-/&BCYEOAREBEAEPgQyBDAETw- &BDEENQ')
+print(decoded)
+
+
+

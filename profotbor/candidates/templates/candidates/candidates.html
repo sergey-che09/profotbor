@@ -1,0 +1,177 @@
+{% load static %}
+
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3"><strong>Сотрудники</strong> Dashboard</h1>
+
+					<div class="row">
+						<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+							<div class="card flex-fill">
+								<div class="card-header">
+
+									<h4 class="card-title mb-0">Список кандидатов</h4>
+								</div>
+								<table class="table table-sm">
+									<thead>
+
+									<tr>
+
+										<th class="d-none d-xl-table-cell"><div class="text-center">Статус<i data-feather="glyphicon glyphicon-sort-by-attributes" class="text-center text-secondary"></i></div></th>
+										<th class="d-none d-xl-table-cell"><div class="text-center">Номер</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">ФИО</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">Филиал</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">Управление</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">Подразд.</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">Долж-ть</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">Спец-ть</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">Тел.</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">Тесты</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">УПР</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">СБ</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">Лист СБ</div></th>
+										<th class="d-none d-md-table-cell"><div class="text-center">Подраздел.</div></th>
+
+									</tr>
+									</thead>
+									<tbody>
+									{% for viewcandidate in viewcandidates %}
+									<tr>
+										{% if viewcandidate.candidateStatus is not null %}
+											{% if viewcandidate.candidateStatus %}
+												<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center"><i data-feather="check" class="text-center text-secondary"></i></div></td>
+											{% else %}
+												<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center"><i data-feather="activity" class="text-primary"></i></div></td>
+											{% endif %}
+										{% else %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center"><a href="#" name="test"><i data-feather="x" class="text-danger"></i></a></div></td>
+										{% endif %}
+
+
+										{% if viewcandidate.candidateNumber is not null %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center">{{ viewcandidate.candidateNumber }}</div></td>
+										{% else %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center"><i data-feather="x" class="text-danger"></i></div></td>
+										{% endif %}
+
+
+										<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}">{{ viewcandidate.candidateName }}</td>
+
+
+										<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center">{{ viewcandidate.branch }}</div></td>
+										{% if viewcandidate.control is not null %}
+										<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center" title="{{ viewcandidate.hrSpecialist }}">{{ viewcandidate.control }}</div></td>
+										{% else %}
+												<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"></td>
+										{% endif %}
+
+
+										{% if viewcandidate.subdivision is not null %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center">{{ viewcandidate.subdivision }}</div></td>
+										{% else %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"></td>
+										{% endif %}
+
+
+										<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center"><a title="{{ viewcandidate.position }}">{{ viewcandidate.positionBr }}</a></div></td>
+
+
+										{% if viewcandidate.speciality is not null %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center">{{ viewcandidate.speciality }}</div></td>
+										{% else %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"></td>
+										{% endif %}
+
+
+										<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center"><i data-feather="phone" class="text-secondary"></i></div></td>
+
+
+										{% if viewcandidate.tests is not null %}
+											{% if viewcandidate.tests %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center"><i data-feather="check-circle" class="text-success"></i></div></td>
+											{% else %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center"><i data-feather="slash" class="text-danger"></i></div></td>
+											{% endif %}
+										{% else %}
+										<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"></td>
+										{% endif %}
+
+										{% if viewcandidate.hrDecision is not null %}
+											{% if viewcandidate.hrDecision %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center">+<i data-feather="check-circle" class="text-success"></i></div></td>
+											{% else %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"><div class="text-center">-<i data-feather="slash" class="text-danger"></i></div></td>
+											{% endif %}
+										{% else %}
+										<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"></td>
+										{% endif %}
+
+										{% if viewcandidate.securityDecision is not null %}
+											{% if viewcandidate.securityDecision %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}">
+												<a href="#" data-toggle="tooltip" data-animation="false" title="{{ candidate.hrSpecialist }}">
+													<div class="text-center"><i data-feather="check-circle" class="text-success"></i></div>
+												</a>
+												</td>
+											{% else %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}">
+												<a href="#" data-toggle="tooltip" data-animation="false" title="{{ candidate.hrSpecialist }}">
+													<div class="text-center"><i data-feather="slash" class="text-danger"></i></div>
+												</a>
+
+											</td>
+											{% endif %}
+										{% else %}
+										<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"></td>
+										{% endif %}
+
+										{% if viewcandidate.securityAssessment_sheet is not null %}
+											{% if viewcandidate.securityAssessment_sheet %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}">
+												<a href="#" data-toggle="tooltip" data-animation="false" title="{{ candidate.departmentSpecialist }}">
+													<div class="text-center"><i data-feather="check-circle" class="text-success"></i></div>
+												</a>
+											</td>
+											{% else %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}">
+												<a href="#" data-toggle="tooltip" data-animation="false" title="{{ candidate.departmentSpecialist }}">
+													<div class="text-center"><i data-feather="slash" class="text-danger"></i></div>
+												</a>
+											</td>
+											{% endif %}
+										{% else %}
+										<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"></td>
+										{% endif %}
+
+
+										{% if viewcandidate.departmentDecision is not null %}
+											{% if viewcandidate.departmentDecision %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}">
+												<a href="#" data-toggle="tooltip" data-animation="false" title="{{ candidate.securitySpecialist }}">
+													<div class="text-center"><i data-feather="check-circle" class="text-success"></i></div>
+												</a>
+											</td>
+											{% else %}
+											<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}">
+												<a href="#" data-toggle="tooltip" data-animation="false" title="{{ candidate.securitySpecialist }}">
+													<div class="text-center"><i data-feather="slash" class="text-danger"></i></div>
+												</a>
+											</td>
+											{% endif %}
+										{% else %}
+										<td class="d-none d-xl-table-cell {% if candidate.recruitment %}table-success{% endif %}"></td>
+										{% endif %}
+									</tr>
+
+									{% endfor %}
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</main>
+
