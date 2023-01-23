@@ -13,7 +13,9 @@ import os
 import environ
 from pathlib import Path
 
-env = environ.Env()
+env = environ.Env(
+    ALLOWED_HOSTS=(list, [])
+)
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +31,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hr.tcla.ru', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS: list[str] = env('ALLOWED_HOSTS')
 
 # Application definition
 
