@@ -14,24 +14,43 @@ import environ
 from pathlib import Path
 
 env = environ.Env(
-    ALLOWED_HOSTS=(list, [])
+   # ALLOWED_HOSTS=(list, [])
+    DEBUG=(bool, False)
 )
 environ.Env.read_env()
 
+SECURE_HSTS_SECONDS = 30  # Unit is seconds; *USE A SMALL VALUE FOR TESTING!*
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+ALLOWED_HOSTS = ['*']
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Take environment variables from .env file
+#environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+#SECRET_KEY = env('SECRET_KEY')
 
+try:
+    SECRET_KEY = os.environ["SECRET_KEY"]
+except KeyError as e:
+    raise RuntimeError("Could not find a SECRET_KEY in environment") from e
+
+#SECRET_KEY='ec33f9caf5e3f28334062e91e9a980854ecff5398f449d868ef0ae5a8f927b83a2a27c1e69759def'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
+#DEBUG = True
 
-ALLOWED_HOSTS: list[str] = env('ALLOWED_HOSTS')
+#ALLOWED_HOSTS: list[str] = env('ALLOWED_HOSTS')
 
 # Application definition
 
@@ -83,13 +102,29 @@ WSGI_APPLICATION = 'profotbor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT'),
+        'NAME' : env('DATABASE_NAME'),
+        'USER' : env('DATABASE_USER'),
+        'PASSWORD' : env('DATABASE_PASS'),
+        'HOST' : env('DATABASE_HOST'),
+        'PORT' : env('DATABASE_PORT'),
+
     }
 }
+
+#DATABASES = {
+    # read os.environ['DATABASE_URL'] and raises
+    # ImproperlyConfigured exception if not found
+    #
+    # The db() method is an alias for db_url().
+    #'default': env.db(),
+
+    # read os.environ['SQLITE_URL']
+    #'extra': env.db_url(
+    #    'DATABASE_URL',
+    #    default='sqlite:////tmp/my-tmp-sqlite.db'
+    #)
+#}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -128,6 +163,8 @@ DATE_FORMAT = 'Y M j'
 
 STATIC_URL = 'static/'
 MEDIA_URL = '/images/'
+
+STATIC_ROOT = "/var/www/192.168.5.187/static"
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
